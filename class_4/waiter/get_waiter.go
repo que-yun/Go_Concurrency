@@ -35,8 +35,8 @@ func main() {
 func (m *Mutex) Count() int {
 	// 获取state字段的值
 	v := atomic.LoadInt32((*int32)(unsafe.Pointer(&m.Mutex)))
-	v = v >> mutexWaiterShift // 得到等待者的数
-	v = v + (v & mutexLocked) // 再加上锁持有者的数量 0或者1
+	v1 := v >> mutexWaiterShift // 得到等待者的数
+	v = v1 + (v & mutexLocked) // 再加上锁持有者的数量 0或者1
 	return int(v)
 }
 
